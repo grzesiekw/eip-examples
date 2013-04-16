@@ -1,5 +1,6 @@
-package com.gw.eip.hello;
+package com.gw.eip.simple;
 
+import com.gw.eip.*;
 import org.apache.camel.*;
 import org.apache.camel.builder.*;
 import org.apache.camel.impl.*;
@@ -7,18 +8,15 @@ import org.junit.*;
 import org.junit.rules.*;
 
 import java.io.*;
-import java.util.concurrent.*;
 
-import static com.jayway.awaitility.Awaitility.*;
-import static java.util.concurrent.TimeUnit.*;
-import static org.hamcrest.Matchers.*;
+import static com.gw.eip.FileUtils.*;
 
 /**
  * User: grzesiek
  * Date: 15.04.13
  * Time: 22:53
  */
-public class HelloFileTest {
+public class SimpleFileTest {
 
 	private final CamelContext context = new DefaultCamelContext();
 
@@ -59,26 +57,10 @@ public class HelloFileTest {
 
 	@Test
 	public void copyFileFromSourceToTarget() throws Exception {
-		createNewFile();
+		createNewFile(sourceFolder, "file.txt");
 
-		assertThatFileExistsInTargetFolder();
+		FileUtils.assertThatFileExistsInFolder(targetFolder);
 	}
 
-	private void assertThatFileExistsInTargetFolder() throws Exception {
-		waitAtMost(5, SECONDS).until(targetFolderSize(), is(equalTo(1)));
-	}
-
-	private Callable<Integer> targetFolderSize() {
-		return new Callable<Integer>() {
-			@Override
-			public Integer call() throws Exception {
-				return targetFolder.list().length;
-			}
-		};
-	}
-
-	private void createNewFile() throws IOException {
-		new File(sourceFolder, "hello.txt").createNewFile();
-	}
 
 }
