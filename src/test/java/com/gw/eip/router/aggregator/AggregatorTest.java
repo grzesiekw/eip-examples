@@ -23,7 +23,7 @@ public class AggregatorTest {
 			public void configure() throws Exception {
 				from("direct:input").split().tokenize(",").to("direct:split");
 
-				from("direct:split").aggregate(header("CamelCorrelationId"), new AppendAggregationStrategy()).completionSize(3).bean(aggregationConsumer, "consume");
+				from("direct:split").aggregate(header(Exchange.CORRELATION_ID), new AppendAggregationStrategy()).completionSize(3).bean(aggregationConsumer, "consume");
 			}
 		});
 
