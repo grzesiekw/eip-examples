@@ -1,4 +1,4 @@
-package com.gw.eip.router;
+package com.gw.eip.router.content.based;
 
 import org.apache.camel.*;
 import org.apache.camel.builder.*;

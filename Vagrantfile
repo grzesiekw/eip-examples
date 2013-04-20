@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
 	config.vm.box = "ubuntu1204"
 	config.vm.box_url = "https://www.dropbox.com/s/f4f5x5mejvoxreh/ubuntu1204.box"
 
-	config.vm.network :private_network, ip: "192.168.10.10"
+	config.vm.network :private_network, ip : "192.168.10.10"
 
 	config.vm.provider :virtualbox do |vb|
 		vb.customize ["modifyvm", :id, "--name", "eip", "--cpus", 2, "--memory", "2048", "--nictype1", "virtio", "--nictype2", "virtio"]
@@ -40,9 +40,15 @@ Vagrant.configure("2") do |config|
 						:roles => ["manager-gui"],
 						:users => [
 								{:name => "tomcat", :password => "tomcat33", :roles => "manager-gui"}
-						]
+						],
+						'7' => {
+								:url => "http://10.0.2.2/resources/apache-tomcat-7.0.39.tar.gz"
+						}
 				},
 				:apollo => {
+						"1.6" => {
+								:url => "http://10.0.2.2/resources/apache-apollo-1.6-unix-distro.tar.gz"
+						},
 						:broker => "eip"
 				}
 		}

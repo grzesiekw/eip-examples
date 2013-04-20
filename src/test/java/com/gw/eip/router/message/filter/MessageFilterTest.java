@@ -1,4 +1,4 @@
-package com.gw.eip.router;
+package com.gw.eip.router.message.filter;
 
 import org.apache.camel.*;
 import org.apache.camel.builder.*;
