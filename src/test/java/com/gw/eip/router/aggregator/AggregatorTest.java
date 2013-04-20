@@ -3,8 +3,9 @@ package com.gw.eip.router.aggregator;
 import org.apache.camel.*;
 import org.apache.camel.builder.*;
 import org.apache.camel.impl.*;
-import org.fest.assertions.*;
 import org.junit.*;
+
+import static org.fest.assertions.Assertions.*;
 
 /**
  * User: grzesiek
@@ -21,7 +22,7 @@ public class AggregatorTest {
 		context.addRoutes(new RouteBuilder() {
 			@Override
 			public void configure() throws Exception {
-				from("direct:input").split().tokenize(",").to("direct:split");
+				from("direct:input").split().tokenize(",").parallelProcessing().to("direct:split");
 
 				from("direct:split").aggregate(header(Exchange.CORRELATION_ID), new AppendAggregationStrategy()).completionSize(3).bean(aggregationConsumer, "consume");
 			}
@@ -37,7 +38,8 @@ public class AggregatorTest {
 
 		producerTemplate.sendBody("direct:input", message);
 
-		Assertions.assertThat(aggregationConsumer.getMessages()).containsExactly("a, b, c");
+		assertThat(aggregationConsumer.getMessages()).hasSize(1);
+		assertThat(aggregationConsumer.getMessages().get(0)).contains("a").contains("b").contains("c");
 	}
 
 }
