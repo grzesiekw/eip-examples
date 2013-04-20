@@ -31,15 +31,12 @@ public class AggregatorTest {
 	}
 
 	@Test
-	public void shouldTestSomething() {
-		// given
+	public void shouldAggregateSplittedMessage() {
 		final ProducerTemplate producerTemplate = context.createProducerTemplate();
 		final String message = "a,b,c";
 
-		// when
 		producerTemplate.sendBody("direct:input", message);
 
-		// then
 		Assertions.assertThat(aggregationConsumer.getMessages()).containsExactly("a, b, c");
 	}
 
