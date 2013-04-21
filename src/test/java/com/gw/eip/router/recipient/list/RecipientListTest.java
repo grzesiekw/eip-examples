@@ -46,7 +46,7 @@ public class RecipientListTest {
 	}
 
 	@Test
-	public void shouldTestSomething() throws Exception {
+	public void shouldCopyFileToRecipientList() throws Exception {
 		createNewFile(sourceFolder, "file.txt");
 
 		assertThatFileExistsInFolder(aFilesTargetFolder);
