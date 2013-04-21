@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
 	config.vm.box = "ubuntu1204"
 	config.vm.box_url = "https://www.dropbox.com/s/f4f5x5mejvoxreh/ubuntu1204.box"
 
-	config.vm.network :private_network, ip : "192.168.10.10"
+	config.vm.network :private_network, ip :"192.168.10.10"
 
 	config.vm.provider :virtualbox do |vb|
 		vb.customize ["modifyvm", :id, "--name", "eip", "--cpus", 2, "--memory", "2048", "--nictype1", "virtio", "--nictype2", "virtio"]

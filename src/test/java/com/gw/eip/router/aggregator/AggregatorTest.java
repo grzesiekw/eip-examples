@@ -5,6 +5,7 @@ import org.apache.camel.builder.*;
 import org.apache.camel.impl.*;
 import org.junit.*;
 
+import static org.apache.camel.Exchange.*;
 import static org.fest.assertions.Assertions.*;
 
 /**
@@ -24,7 +25,7 @@ public class AggregatorTest {
 			public void configure() throws Exception {
 				from("direct:input").split().tokenize(",").parallelProcessing().to("direct:split");
 
-				from("direct:split").aggregate(header(Exchange.CORRELATION_ID), new AppendAggregationStrategy()).completionSize(3).bean(aggregationConsumer, "consume");
+				from("direct:split").aggregate(header(CORRELATION_ID), new AppendAggregationStrategy()).completionSize(header(SPLIT_SIZE)).bean(aggregationConsumer, "consume");
 			}
 		});
 

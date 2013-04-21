@@ -11,6 +11,7 @@ import java.util.concurrent.*;
 
 import static com.jayway.awaitility.Awaitility.*;
 import static com.jayway.awaitility.Duration.*;
+import static org.apache.camel.Exchange.*;
 import static org.hamcrest.Matchers.*;
 
 /**
@@ -29,8 +30,8 @@ public class ResequencerTest {
 			@Override
 			public void configure() throws Exception {
 				from("direct:input").split().tokenize(",").parallelProcessing().to("direct:split");
-				from("direct:split").resequence(header(Exchange.SPLIT_INDEX)).to("direct:resequence");
-				from("direct:resequence").aggregate(header(Exchange.CORRELATION_ID), new AppendAggregationStrategy()).completionSize(3).bean(aggregationConsumer, "consume");
+				from("direct:split").resequence(header(SPLIT_INDEX)).to("direct:resequence");
+				from("direct:resequence").aggregate(header(CORRELATION_ID), new AppendAggregationStrategy()).completionSize(header(SPLIT_SIZE)).bean(aggregationConsumer, "consume");
 			}
 		});
 
