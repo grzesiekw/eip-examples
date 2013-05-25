@@ -1,4 +1,4 @@
-package com.gw.eip.endpoint;
+package com.gw.eip.endpoint.polling.consumer;
 
 import org.apache.camel.*;
 import org.apache.camel.builder.*;
